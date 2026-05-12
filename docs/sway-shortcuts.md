@@ -43,7 +43,7 @@ Modifier notes:
 
 | Menu | What It Does |
 | --- | --- |
-| Power menu | Lock, suspend, restart, power off |
+| Power menu | Lock, screen off, restart, power off |
 | Wi-Fi menu | Rescan, toggle Wi-Fi, disconnect, connect to visible/saved networks |
 | Audio menu | Mute, volume up/down, choose output device, choose input device, open Bluetooth menu |
 | Bluetooth menu | Toggle Bluetooth, connect/disconnect paired devices |
@@ -86,6 +86,7 @@ Modifier notes:
 | 10 minutes idle | Lock with `swaylock` |
 | 10 minutes 15 seconds idle | Turn display off |
 | Idle suspend | Disabled until suspend/resume is reliable on this machine |
+| Lid close | Lock; systemd-logind should be configured to ignore lid suspend |
 | Before sleep | Lock first |
 
 ## Helper Files
@@ -103,4 +104,6 @@ Modifier notes:
 | `~/.config/sway/toggle-input.sh` | `US` / `JP` toggle |
 | `~/.config/sway/kana-input.sh` | Force Japanese Hiragana mode |
 | `~/.config/sway/workspace-labels.py` | Dynamic workspace labels |
+| `~/.config/sway/lid-close.sh` | Lock when the lid closes |
+| `~/.config/sway/lid-open.sh` | Power outputs back on when the lid opens |
 | `~/.config/sway/suspend-on-battery.sh` | Battery-only suspend helper, currently unused |

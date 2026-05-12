@@ -96,4 +96,7 @@ copy_tree "$repo_dir/local/share/applications" "$HOME/.local/share/applications"
 copy_file "$repo_dir/docs/sway-shortcuts.md" "$HOME/sway-shortcuts.md" text
 
 log "done"
+log "optional lid-suspend disable:"
+log "  sudo install -Dm644 systemd/logind.conf.d/10-sway-no-lid-suspend.conf /etc/systemd/logind.conf.d/10-sway-no-lid-suspend.conf"
+log "  reboot afterward, or restart systemd-logind from a TTY"
 log "reload sway with: swaymsg reload"

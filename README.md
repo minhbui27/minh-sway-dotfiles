@@ -14,6 +14,7 @@ config/terminator/            Terminator profile config
 config/mozc/                  Minimal IBus Mozc text config only
 local/bin/                    App wrapper scripts for Sway/IBus behavior
 local/share/applications/     Desktop-entry overrides for Wofi/app launchers
+systemd/logind.conf.d/        Optional system config to stop lid-close suspend
 docs/sway-shortcuts.md        Shortcut reference
 install.sh                    Non-destructive restore script
 ```
@@ -27,6 +28,7 @@ install.sh                    Non-destructive restore script
 - Kitty default terminal, with Terminator available for Japanese terminal input.
 - Screenshot helpers using `grim`, `slurp`, and `wl-copy`.
 - Styled `swaylock-effects` lock screen using the stored wallpaper.
+- Lid close locks instead of suspending when the systemd-logind drop-in is installed.
 - Idle behavior:
   - 10 min: lock
   - 10 min 15 sec: screen off
@@ -111,6 +113,14 @@ It then copies files into:
 ```
 
 During install, text files have `/home/minhbui` rewritten to the target `$HOME`, so the config can be restored under a different home path.
+
+The installer does not write root-owned system files. To stop lid-close from triggering suspend, install the logind drop-in separately:
+
+```bash
+sudo install -Dm644 systemd/logind.conf.d/10-sway-no-lid-suspend.conf /etc/systemd/logind.conf.d/10-sway-no-lid-suspend.conf
+```
+
+Reboot afterward, or restart `systemd-logind` from a TTY if you need it immediately.
 
 ## After Install
 

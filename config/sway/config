@@ -66,6 +66,13 @@ exec swayidle -w \
          resume 'swaymsg "output * power on"' \
          before-sleep '/home/minhbui/.config/sway/lock.sh'
 
+### Lid handling
+#
+# systemd-logind is configured to ignore lid-close suspend, so Sway can lock
+# without entering the unreliable suspend/resume path on this machine.
+bindswitch --locked lid:on exec /home/minhbui/.config/sway/lid-close.sh
+bindswitch --locked lid:off exec /home/minhbui/.config/sway/lid-open.sh
+
 ### Input configuration
 #
 # Example configuration:
