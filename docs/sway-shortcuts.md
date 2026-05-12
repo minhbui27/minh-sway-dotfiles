@@ -16,6 +16,8 @@ Modifier notes:
 | `Ctrl+J` | Force Japanese Mozc Hiragana mode (`JP あ`) |
 | `Super+Shift+P` | Open power menu |
 | `Alt+Shift+P` | Open power menu fallback |
+| `Super+Shift+O` | Force outputs back on |
+| `Alt+Shift+O` | Force outputs back on fallback |
 | `Super+Shift+A` | Open audio menu |
 | `Alt+Shift+A` | Open audio menu fallback |
 | `Print` | Full screenshot to `~/Pictures/Screenshots/` |
@@ -43,7 +45,7 @@ Modifier notes:
 
 | Menu | What It Does |
 | --- | --- |
-| Power menu | Lock, screen off, restart, power off |
+| Power menu | Lock, restart, power off |
 | Wi-Fi menu | Rescan, toggle Wi-Fi, disconnect, connect to visible/saved networks |
 | Audio menu | Mute, volume up/down, choose output device, choose input device, open Bluetooth menu |
 | Bluetooth menu | Toggle Bluetooth, connect/disconnect paired devices |
@@ -84,7 +86,7 @@ Modifier notes:
 | Condition | Behavior |
 | --- | --- |
 | 10 minutes idle | Lock with `swaylock` |
-| 10 minutes 15 seconds idle | Turn display off |
+| Idle screen-off | Disabled until display wake is reliable on this machine |
 | Idle suspend | Disabled until suspend/resume is reliable on this machine |
 | Lid close | Sway inhibits logind suspend and locks |
 | Before sleep | Lock first |

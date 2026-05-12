@@ -31,7 +31,7 @@ install.sh                    Non-destructive restore script
 - Lid close locks instead of suspending while Sway is running, using a logind lid-switch inhibitor.
 - Idle behavior:
   - 10 min: lock
-  - 10 min 15 sec: screen off
+  - idle screen-off: disabled until display wake is reliable on this machine
   - idle suspend: disabled until suspend/resume is reliable on this machine
 
 ## Required Packages
