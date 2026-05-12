@@ -103,4 +103,4 @@ Modifier notes:
 | `~/.config/sway/toggle-input.sh` | `US` / `JP` toggle |
 | `~/.config/sway/kana-input.sh` | Force Japanese Hiragana mode |
 | `~/.config/sway/workspace-labels.py` | Dynamic workspace labels |
-| `~/.config/sway/suspend-on-battery.sh` | Battery-only suspend check |
+| `~/.config/sway/suspend-on-battery.sh` | Battery-only suspend helper, currently unused |
