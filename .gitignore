@@ -1,0 +1,17 @@
+# Python/runtime cache
+__pycache__/
+*.py[cod]
+
+# Local logs and caches
+*.log
+.cache/
+mimeinfo.cache
+
+# Mozc state databases should not be tracked
+config/mozc/*.db
+config/mozc/.*.lock
+config/mozc/.session.ipc
+
+# Editor/OS noise
+*~
+.DS_Store

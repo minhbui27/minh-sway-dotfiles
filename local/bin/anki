@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /home/minhbui/.config/sway/with-ibus-x11.sh /usr/local/bin/anki "$@"

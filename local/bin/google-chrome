@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /home/minhbui/.config/sway/with-ibus-x11.sh /usr/bin/google-chrome --ozone-platform=x11 "$@"

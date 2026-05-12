@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /home/minhbui/.config/sway/with-ibus-x11.sh /usr/bin/brave-browser-stable --ozone-platform=x11 "$@"
