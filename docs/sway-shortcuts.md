@@ -45,7 +45,7 @@ Modifier notes:
 
 | Menu | What It Does |
 | --- | --- |
-| Power menu | Lock, restart, power off |
+| Power menu | Lock, suspend, restart, power off |
 | Wi-Fi menu | Rescan, toggle Wi-Fi, disconnect, connect to visible/saved networks |
 | Audio menu | Mute, volume up/down, choose output device, choose input device, open Bluetooth menu |
 | Bluetooth menu | Toggle Bluetooth, connect/disconnect paired devices |
@@ -85,10 +85,9 @@ Modifier notes:
 
 | Condition | Behavior |
 | --- | --- |
-| 10 minutes idle | Lock with `swaylock` |
+| 10 minutes idle | Suspend; `before-sleep` locks first |
 | Idle screen-off | Disabled until display wake is reliable on this machine |
-| Idle suspend | Disabled until suspend/resume is reliable on this machine |
-| Lid close | Sway inhibits logind suspend and locks |
+| Lid close | Sway handles lid-close and suspends |
 | Before sleep | Lock first |
 
 ## Helper Files

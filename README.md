@@ -15,6 +15,8 @@ config/mozc/                  Minimal IBus Mozc text config only
 local/bin/                    App wrapper scripts for Sway/IBus behavior
 local/share/applications/     Desktop-entry overrides for Wofi/app launchers
 systemd/logind.conf.d/        Optional system config to stop lid-close suspend
+systemd/enable-wake-sources.sh Optional root helper for keyboard/Bluetooth wake
+systemd/system/               Optional systemd services for root helpers
 docs/sway-shortcuts.md        Shortcut reference
 install.sh                    Non-destructive restore script
 ```
@@ -28,11 +30,10 @@ install.sh                    Non-destructive restore script
 - Kitty default terminal, with Terminator available for Japanese terminal input.
 - Screenshot helpers using `grim`, `slurp`, and `wl-copy`.
 - Styled `swaylock-effects` lock screen using the stored wallpaper.
-- Lid close locks instead of suspending while Sway is running, using a logind lid-switch inhibitor.
+- Lid close suspends while Sway is running, with Sway handling the lid switch directly.
 - Idle behavior:
-  - 10 min: lock
+  - 10 min: suspend, with `before-sleep` locking first
   - idle screen-off: disabled until display wake is reliable on this machine
-  - idle suspend: disabled until suspend/resume is reliable on this machine
 
 ## Required Packages
 
@@ -121,6 +122,20 @@ sudo install -Dm644 systemd/logind.conf.d/10-sway-no-lid-suspend.conf /etc/syste
 ```
 
 Reboot afterward, or restart `systemd-logind` from a TTY if you need it immediately.
+
+To enable keyboard and Bluetooth wake sources now:
+
+```bash
+sudo sh systemd/enable-wake-sources.sh
+```
+
+To make those wake-source settings persist across boots:
+
+```bash
+sudo install -Dm755 systemd/enable-wake-sources.sh /usr/local/bin/minh-enable-wake-sources
+sudo install -Dm644 systemd/system/minh-wake-sources.service /etc/systemd/system/minh-wake-sources.service
+sudo systemctl enable --now minh-wake-sources.service
+```
 
 ## After Install
 

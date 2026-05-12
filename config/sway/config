@@ -56,17 +56,16 @@ output * bg /home/minhbui/.config/sway/assets/wallpaper.jpg fill
 # This will lock your screen after 300 seconds of inactivity and also lock
 # your screen before your computer goes to sleep.
 
-# Lock after 10 minutes. Idle suspend and output power-off are disabled until
-# suspend/resume/display wake are reliable on this machine.
+# Suspend after 10 minutes. Locking is handled by before-sleep.
 exec swayidle -w \
-         timeout 600 '/home/minhbui/.config/sway/lock.sh' \
+         timeout 600 'systemctl suspend' \
          resume 'swaymsg "output * power on"' \
          before-sleep '/home/minhbui/.config/sway/lock.sh'
 
 ### Lid handling
 #
-# systemd-logind is configured to ignore lid-close suspend, so Sway can lock
-# without entering the unreliable suspend/resume path on this machine.
+# systemd-logind is configured to ignore lid-close suspend, so Sway can handle
+# lid-close itself and use the same before-sleep lock hook.
 exec_always /home/minhbui/.config/sway/inhibit-lid-suspend.sh
 bindswitch --locked lid:on exec /home/minhbui/.config/sway/lid-close.sh
 bindswitch --locked lid:off exec /home/minhbui/.config/sway/lid-open.sh

@@ -1,0 +1,10 @@
+[Unit]
+Description=Enable wake sources for Minh's Sway laptop setup
+After=multi-user.target bluetooth.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/minh-enable-wake-sources
+
+[Install]
+WantedBy=multi-user.target

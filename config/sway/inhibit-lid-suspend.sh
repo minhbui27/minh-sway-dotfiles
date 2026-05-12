@@ -12,6 +12,6 @@ printf "%s starting lid suspend inhibitor\n" "$(date '+%F %T')" >> "$log_file"
 exec systemd-inhibit \
     --what=handle-lid-switch \
     --who=sway-lid-inhibitor \
-    --why="Sway locks on lid close; suspend/resume is unreliable" \
+    --why="Sway handles lid close and calls suspend itself" \
     --mode=block \
     sleep infinity

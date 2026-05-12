@@ -5,12 +5,15 @@ mkdir -p "$(dirname "$log_file")"
 exec >> "$log_file" 2>&1
 printf "%s launched pid=%s\n" "$(date '+%F %T')" "$$" >> "$log_file"
 
-choice=$(printf " Lock\n Restart\n Power off\n" \
-    | wofi --dmenu --prompt "Power" --width 260 --height 180)
+choice=$(printf " Lock\n⏾ Suspend\n Restart\n Power off\n" \
+    | wofi --dmenu --prompt "Power" --width 260 --height 220)
 
 case "$choice" in
     *Lock)
         /home/minhbui/.config/sway/lock.sh
+        ;;
+    *Suspend)
+        systemctl suspend
         ;;
     *Restart)
         confirm=$(printf " Restart\nCancel\n" \
