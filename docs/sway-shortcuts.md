@@ -86,7 +86,7 @@ Modifier notes:
 | 10 minutes idle | Lock with `swaylock` |
 | 10 minutes 15 seconds idle | Turn display off |
 | Idle suspend | Disabled until suspend/resume is reliable on this machine |
-| Lid close | Lock; systemd-logind should be configured to ignore lid suspend |
+| Lid close | Sway inhibits logind suspend and locks |
 | Before sleep | Lock first |
 
 ## Helper Files
@@ -104,6 +104,7 @@ Modifier notes:
 | `~/.config/sway/toggle-input.sh` | `US` / `JP` toggle |
 | `~/.config/sway/kana-input.sh` | Force Japanese Hiragana mode |
 | `~/.config/sway/workspace-labels.py` | Dynamic workspace labels |
+| `~/.config/sway/inhibit-lid-suspend.sh` | Prevent logind from suspending on lid close while Sway is running |
 | `~/.config/sway/lid-close.sh` | Lock when the lid closes |
 | `~/.config/sway/lid-open.sh` | Power outputs back on when the lid opens |
 | `~/.config/sway/suspend-on-battery.sh` | Battery-only suspend helper, currently unused |
