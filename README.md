@@ -115,7 +115,7 @@ It then copies files into:
 
 During install, text files have `/home/minhbui` rewritten to the target `$HOME`, so the config can be restored under a different home path.
 
-The Sway config starts a user-session lid-switch inhibitor, so lid-close does not suspend while Sway is running. The installer does not write root-owned system files. To make this policy system-wide too, install the logind drop-in separately:
+The Sway config starts a user-session lid-switch inhibitor so Sway, not logind, owns lid-close behavior. The installer does not write root-owned system files. To make logind ignore lid-close system-wide and let the Sway lid binding suspend cleanly, install the drop-in separately:
 
 ```bash
 sudo install -Dm644 systemd/logind.conf.d/10-sway-no-lid-suspend.conf /etc/systemd/logind.conf.d/10-sway-no-lid-suspend.conf
@@ -123,11 +123,13 @@ sudo install -Dm644 systemd/logind.conf.d/10-sway-no-lid-suspend.conf /etc/syste
 
 Reboot afterward, or restart `systemd-logind` from a TTY if you need it immediately.
 
-To enable keyboard and Bluetooth wake sources now:
+To enable the safer built-in wake sources now:
 
 ```bash
 sudo sh systemd/enable-wake-sources.sh
 ```
+
+This enables the internal keyboard, TrackPoint, and Intel HID wake paths. Broad USB/Bluetooth wake is disabled by default because it caused immediate resume on this laptop.
 
 To make those wake-source settings persist across boots:
 

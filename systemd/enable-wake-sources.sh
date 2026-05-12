@@ -2,23 +2,25 @@
 
 set -eu
 
-enable_wakeup() {
+set_wakeup() {
     path=$1
     label=$2
+    value=$3
 
     if [ -e "$path" ]; then
-        printf 'enabling wake: %s (%s)\n' "$label" "$path"
-        printf 'enabled\n' > "$path"
+        printf '%s wake: %s (%s)\n' "$value" "$label" "$path"
+        printf '%s\n' "$value" > "$path"
     else
         printf 'missing wake path: %s (%s)\n' "$label" "$path"
     fi
 }
 
-enable_wakeup /sys/devices/platform/i8042/serio0/power/wakeup "internal keyboard"
-enable_wakeup /sys/devices/platform/i8042/serio1/power/wakeup "TrackPoint"
-enable_wakeup /sys/devices/platform/INTC1051:00/power/wakeup "Intel HID events"
-enable_wakeup /sys/devices/pci0000:00/0000:00:14.0/power/wakeup "XHCI USB controller"
-enable_wakeup /sys/devices/pci0000:00/0000:00:14.0/usb3/power/wakeup "USB2 root hub"
+# Keep the safe built-in wake sources enabled first. Broad USB/Bluetooth wake
+# caused immediate resume on this laptop, so those stay disabled by default.
+set_wakeup /sys/devices/platform/i8042/serio0/power/wakeup "internal keyboard" enabled
+set_wakeup /sys/devices/platform/i8042/serio1/power/wakeup "TrackPoint" enabled
+set_wakeup /sys/devices/platform/INTC1051:00/power/wakeup "Intel HID events" enabled
+set_wakeup /sys/devices/pci0000:00/0000:00:14.0/usb3/power/wakeup "USB2 root hub" disabled
 
 for device in /sys/bus/usb/devices/*; do
     [ -r "$device/idVendor" ] || continue
@@ -28,7 +30,7 @@ for device in /sys/bus/usb/devices/*; do
 
     case "$vendor:$product" in
         8087:0026)
-            enable_wakeup "$device/power/wakeup" "Intel Bluetooth controller"
+            set_wakeup "$device/power/wakeup" "Intel Bluetooth controller" disabled
             ;;
     esac
 done

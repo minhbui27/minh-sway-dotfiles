@@ -105,7 +105,9 @@ Modifier notes:
 | `~/.config/sway/toggle-input.sh` | `US` / `JP` toggle |
 | `~/.config/sway/kana-input.sh` | Force Japanese Hiragana mode |
 | `~/.config/sway/workspace-labels.py` | Dynamic workspace labels |
-| `~/.config/sway/inhibit-lid-suspend.sh` | Prevent logind from suspending on lid close while Sway is running |
-| `~/.config/sway/lid-close.sh` | Lock when the lid closes |
+| `~/.config/sway/inhibit-lid-suspend.sh` | Prevent logind's default lid handling so Sway can handle lid close |
+| `~/.config/sway/idle-suspend.sh` | Suspend after idle unless the system just resumed |
+| `~/.config/sway/resume-from-suspend.sh` | Mark resume time and power outputs on |
+| `~/.config/sway/lid-close.sh` | Suspend when the lid closes |
 | `~/.config/sway/lid-open.sh` | Power outputs back on when the lid opens |
 | `~/.config/sway/suspend-on-battery.sh` | Battery-only suspend helper, currently unused |

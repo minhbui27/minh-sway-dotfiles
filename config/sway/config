@@ -58,8 +58,8 @@ output * bg /home/minhbui/.config/sway/assets/wallpaper.jpg fill
 
 # Suspend after 10 minutes. Locking is handled by before-sleep.
 exec swayidle -w \
-         timeout 600 'systemctl suspend' \
-         resume 'swaymsg "output * power on"' \
+         timeout 600 '/home/minhbui/.config/sway/idle-suspend.sh' \
+         resume '/home/minhbui/.config/sway/resume-from-suspend.sh' \
          before-sleep '/home/minhbui/.config/sway/lock.sh'
 
 ### Lid handling
