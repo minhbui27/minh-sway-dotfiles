@@ -30,8 +30,7 @@ install.sh                    Non-destructive restore script
 - Idle behavior:
   - 10 min: lock
   - 10 min 15 sec: screen off
-  - 30 min: suspend only on battery
-  - plugged in: never idle-suspend
+  - idle suspend: disabled until suspend/resume is reliable on this machine
 
 ## Required Packages
 

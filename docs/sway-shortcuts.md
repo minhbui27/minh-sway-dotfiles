@@ -85,8 +85,7 @@ Modifier notes:
 | --- | --- |
 | 10 minutes idle | Lock with `swaylock` |
 | 10 minutes 15 seconds idle | Turn display off |
-| 30 minutes idle on battery | Suspend |
-| 30 minutes idle while plugged in | Stay locked/screen-off; skip suspend |
+| Idle suspend | Disabled until suspend/resume is reliable on this machine |
 | Before sleep | Lock first |
 
 ## Helper Files

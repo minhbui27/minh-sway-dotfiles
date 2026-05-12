@@ -59,10 +59,10 @@ output * bg /home/minhbui/.config/sway/assets/wallpaper.jpg fill
 # resumed. It will also lock your screen before your computer goes to sleep.
 
 # Lock after 10 minutes, then turn the display off while locked.
+# Idle suspend is disabled until suspend/resume is reliable on this machine.
 exec swayidle -w \
          timeout 600 '/home/minhbui/.config/sway/lock.sh' \
          timeout 615 'swaymsg "output * power off"' \
-         timeout 1800 '/home/minhbui/.config/sway/suspend-on-battery.sh' \
          resume 'swaymsg "output * power on"' \
          before-sleep '/home/minhbui/.config/sway/lock.sh'
 
