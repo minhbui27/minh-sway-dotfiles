@@ -12,7 +12,7 @@ Modifier notes:
 
 | Shortcut | Action |
 | --- | --- |
-| `Ctrl+Space` | Toggle input source between `US` and `JP` |
+| `Ctrl+Space` | Toggle input source between `US` and `JP あ` |
 | `Ctrl+J` | Force Japanese Mozc Hiragana mode (`JP あ`) |
 | `Super+Shift+P` | Open power menu |
 | `Alt+Shift+P` | Open power menu fallback |
