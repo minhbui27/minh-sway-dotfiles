@@ -8,6 +8,17 @@ grace_seconds=120
 mkdir -p "$cache_dir"
 now=$(date '+%s')
 
+if upower -e 2>/dev/null | while IFS= read -r device; do
+    upower -i "$device" 2>/dev/null | awk '
+        /line-power/ { line_power = 1 }
+        line_power && /online:[[:space:]]+yes/ { found = 1 }
+        END { exit found ? 0 : 1 }
+    ' && exit 0
+done; then
+    printf "%s skip idle suspend: plugged in\n" "$(date '+%F %T')" >> "$log_file"
+    exit 0
+fi
+
 if [ -r "$resume_file" ]; then
     last_resume=$(cat "$resume_file")
     case "$last_resume" in
@@ -23,5 +34,5 @@ if [ -r "$resume_file" ]; then
     fi
 fi
 
-printf "%s idle suspend\n" "$(date '+%F %T')" >> "$log_file"
+printf "%s idle suspend: on battery\n" "$(date '+%F %T')" >> "$log_file"
 systemctl suspend

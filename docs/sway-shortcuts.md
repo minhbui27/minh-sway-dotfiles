@@ -85,7 +85,8 @@ Modifier notes:
 
 | Condition | Behavior |
 | --- | --- |
-| 10 minutes idle | Suspend; `before-sleep` locks first |
+| 10 minutes idle on battery | Suspend; `before-sleep` locks first |
+| 10 minutes idle while plugged in | Stay awake |
 | Sleep mode | `s2idle`, so the internal keyboard can wake the laptop |
 | Idle screen-off | Disabled until display wake is reliable on this machine |
 | Lid close | Sway handles lid-close and suspends |
