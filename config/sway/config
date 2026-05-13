@@ -56,12 +56,10 @@ output * bg /home/minhbui/.config/sway/assets/wallpaper.jpg fill
 # This will lock your screen after 300 seconds of inactivity and also lock
 # your screen before your computer goes to sleep.
 
-# After 10 minutes, lock on external power or suspend on battery.
+# After 10 minutes, lock on any power state.
+# After 15 minutes, suspend only on battery. Plugged in stays locked and awake.
 # before-sleep locks before explicit suspend/lid-close.
-exec swayidle -w \
-         timeout 600 '/home/minhbui/.config/sway/idle-suspend.sh' \
-         resume '/home/minhbui/.config/sway/resume-from-suspend.sh' \
-         before-sleep '/home/minhbui/.config/sway/lock.sh'
+exec /home/minhbui/.config/sway/start-swayidle.sh
 
 ### Lid handling
 #

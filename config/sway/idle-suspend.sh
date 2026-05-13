@@ -15,8 +15,7 @@ if upower -e 2>/dev/null | while IFS= read -r device; do
         END { exit found ? 0 : 1 }
     ' && exit 0
 done; then
-    printf "%s idle lock: plugged in\n" "$(date '+%F %T')" >> "$log_file"
-    /home/minhbui/.config/sway/lock.sh
+    printf "%s skip idle suspend: plugged in\n" "$(date '+%F %T')" >> "$log_file"
     exit 0
 fi
 

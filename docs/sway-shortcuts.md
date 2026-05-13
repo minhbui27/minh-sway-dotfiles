@@ -85,8 +85,9 @@ Modifier notes:
 
 | Condition | Behavior |
 | --- | --- |
-| 10 minutes idle on battery | Suspend; `before-sleep` locks first |
-| 10 minutes idle while plugged in | Lock only; stay awake |
+| 10 minutes idle | Lock screen |
+| 15 minutes idle on battery | Suspend |
+| 15 minutes idle while plugged in | Stay locked and awake |
 | Sleep mode | `s2idle`, so the internal keyboard can wake the laptop |
 | Idle screen-off | Disabled until display wake is reliable on this machine |
 | Lid close | Sway handles lid-close and suspends |
@@ -108,7 +109,8 @@ Modifier notes:
 | `~/.config/sway/kana-input.sh` | Force Japanese Hiragana mode |
 | `~/.config/sway/workspace-labels.py` | Dynamic workspace labels |
 | `~/.config/sway/inhibit-lid-suspend.sh` | Prevent logind's default lid handling so Sway can handle lid close |
-| `~/.config/sway/idle-suspend.sh` | Lock on plugged-in idle; suspend on battery idle unless the system just resumed |
+| `~/.config/sway/start-swayidle.sh` | Start the staged GNOME-like idle policy |
+| `~/.config/sway/idle-suspend.sh` | Suspend after the second idle stage only on battery, unless the system just resumed |
 | `~/.config/sway/resume-from-suspend.sh` | Mark resume time and power outputs on |
 | `~/.config/sway/lid-close.sh` | Suspend when the lid closes |
 | `~/.config/sway/lid-open.sh` | Power outputs back on when the lid opens |

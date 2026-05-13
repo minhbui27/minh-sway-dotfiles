@@ -32,8 +32,9 @@ install.sh                    Non-destructive restore script
 - Styled `swaylock-effects` lock screen using the stored wallpaper.
 - Lid close suspends while Sway is running, with Sway handling the lid switch directly.
 - Idle behavior:
-  - 10 min on battery: suspend, with `before-sleep` locking first
-  - 10 min plugged in: lock only and stay awake
+  - 10 min idle: lock screen
+  - 15 min on battery: suspend
+  - 15 min plugged in: stay locked and awake
   - idle screen-off: disabled until display wake is reliable on this machine
 
 ## Required Packages
