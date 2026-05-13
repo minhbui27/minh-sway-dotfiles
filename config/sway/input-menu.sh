@@ -8,15 +8,28 @@ if ! fcitx5-remote --check >/dev/null 2>&1; then
     sleep 0.2
 fi
 
-case "$(fcitx5-remote -n 2>/dev/null)" in
-    mozc)
+choice=$(printf '%s\n' \
+    "US keyboard" \
+    "Japanese Mozc" \
+    "Fcitx5 settings" \
+    "Restart Fcitx5" \
+    | wofi --dmenu --prompt "Input")
+
+case "$choice" in
+    "US keyboard")
         fcitx5-remote -s keyboard-us >/dev/null 2>&1 || true
         fcitx5-remote -c >/dev/null 2>&1 || true
         printf "US\n" > "$mode_file"
         ;;
-    *)
+    "Japanese Mozc")
         fcitx5-remote -s mozc >/dev/null 2>&1 || true
         fcitx5-remote -o >/dev/null 2>&1 || true
         printf "あ\n" > "$mode_file"
+        ;;
+    "Fcitx5 settings")
+        fcitx5-configtool >/dev/null 2>&1 &
+        ;;
+    "Restart Fcitx5")
+        /home/minhbui/.config/sway/start-fcitx5.sh >/dev/null 2>&1
         ;;
 esac

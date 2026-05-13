@@ -1,6 +1,7 @@
 #!/bin/sh
 
 power_menu="/home/minhbui/.config/sway/power-menu.sh"
+input_menu="/home/minhbui/.config/sway/input-menu.sh"
 audio_menu="/home/minhbui/.config/sway/audio-menu.sh"
 bluetooth_menu="/home/minhbui/.config/sway/bluetooth-menu.sh"
 wifi_menu="/home/minhbui/.config/sway/wifi-menu.sh"
@@ -16,17 +17,18 @@ block() {
 }
 
 keyboard_status() {
-    engine=$(ibus engine 2>/dev/null)
-    case "$engine" in
-        mozc-jp)
-            mode=$(cat "${XDG_CACHE_HOME:-$HOME/.cache}/sway/ibus-mozc-mode" 2>/dev/null)
+    im=$(fcitx5-remote -n 2>/dev/null)
+    state=$(fcitx5-remote 2>/dev/null)
+    case "$im:$state" in
+        mozc:2)
+            mode=$(cat "${XDG_CACHE_HOME:-$HOME/.cache}/sway/fcitx5-mode" 2>/dev/null)
             case "$mode" in
-                A|あ|ア|Ａ|ｱ) printf " JP %s" "$mode" ;;
+                あ|ア|Ａ|ｱ) printf " JP %s" "$mode" ;;
                 *) printf " JP あ" ;;
             esac
             return
             ;;
-        xkb:us::eng) printf " US"; return ;;
+        keyboard-us:*|*:1|*:0) printf " US"; return ;;
     esac
 
     layout=$(swaymsg -t get_inputs -r 2>/dev/null \
@@ -123,6 +125,7 @@ handle_clicks() {
         printf "%s %s\n" "$(date '+%F %T')" "$event" >> "$click_log"
         case "$event" in
             *power_menu*) swaymsg exec "$power_menu" >> "$click_log" 2>&1 ;;
+            *'"name": "keyboard"'*|*'"name":"keyboard"'*) swaymsg exec "$input_menu" >> "$click_log" 2>&1 ;;
             *'"name": "volume"'*|*'"name":"volume"'*) swaymsg exec "$audio_menu" >> "$click_log" 2>&1 ;;
             *'"name": "bluetooth"'*|*'"name":"bluetooth"'*) swaymsg exec "$bluetooth_menu" >> "$click_log" 2>&1 ;;
             *'"name": "wifi"'*|*'"name":"wifi"'*) swaymsg exec "$wifi_menu" >> "$click_log" 2>&1 ;;

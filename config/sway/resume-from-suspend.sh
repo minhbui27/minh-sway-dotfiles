@@ -7,4 +7,4 @@ resume_file="$cache_dir/last-resume"
 mkdir -p "$cache_dir"
 date '+%s' > "$resume_file"
 printf "%s resumed from suspend\n" "$(date '+%F %T')" >> "$log_file"
-swaymsg "output * power on" >/dev/null 2>&1
+/home/minhbui/.config/sway/screen-unblank.sh

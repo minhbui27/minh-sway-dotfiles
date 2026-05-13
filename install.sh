@@ -86,6 +86,7 @@ log "backup: $backup_dir"
 run mkdir -p "$backup_dir"
 
 copy_tree "$repo_dir/config/sway" "$HOME/.config/sway"
+copy_tree "$repo_dir/config/fcitx5" "$HOME/.config/fcitx5"
 copy_tree "$repo_dir/config/kitty" "$HOME/.config/kitty"
 copy_tree "$repo_dir/config/terminator" "$HOME/.config/terminator"
 copy_file "$repo_dir/config/mozc/ibus_config.textproto" "$HOME/.config/mozc/ibus_config.textproto" text

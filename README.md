@@ -2,7 +2,7 @@
 
 This repo contains my Sway desktop configuration, helper scripts, terminal settings, selected app wrappers, and notes for restoring the setup on another Ubuntu/Sway machine.
 
-The active setup was built on Ubuntu 24.04 with Sway, PipeWire/WirePlumber, IBus Mozc, Wofi, Kitty, and `swaylock-effects`.
+The active setup was built on Ubuntu 24.04 with Sway, PipeWire/WirePlumber, Fcitx5 Mozc, Wofi, Kitty, and `swaylock-effects`.
 
 ## Layout
 
@@ -11,8 +11,9 @@ config/sway/                  Sway config, bar, menus, lock, screenshots, input 
 config/sway/assets/           Wallpaper and other Sway assets
 config/kitty/                 Kitty config
 config/terminator/            Terminator profile config
-config/mozc/                  Minimal IBus Mozc text config only
-local/bin/                    App wrapper scripts for Sway/IBus behavior
+config/fcitx5/                Fcitx5 profile for US keyboard plus Mozc
+config/mozc/                  Legacy minimal IBus Mozc text config
+local/bin/                    App wrapper scripts for Sway behavior
 local/share/applications/     Desktop-entry overrides for Wofi/app launchers
 systemd/logind.conf.d/        Optional system config to stop lid-close suspend
 systemd/enable-wake-sources.sh Optional root helper for s2idle and wake sources
@@ -26,16 +27,18 @@ install.sh                    Non-destructive restore script
 - Alt-based Sway modifier.
 - Dynamic workspace labels based on focused app/window.
 - Swaybar status with clickable menus for Wi-Fi, Bluetooth, audio, and power.
-- IBus/Mozc helpers for Japanese input.
+- Brightness keys with percentage notifications and a Wofi brightness menu.
+- Fcitx5/Mozc helpers for Japanese input.
 - Kitty default terminal, with Terminator available for Japanese terminal input.
 - Screenshot helpers using `grim`, `slurp`, and `wl-copy`.
 - Styled `swaylock-effects` lock screen using the stored wallpaper.
 - Lid close suspends while Sway is running, with Sway handling the lid switch directly.
 - Idle behavior:
   - 10 min idle: lock screen
+  - 11 min idle: blank the internal panel backlight
   - 15 min on battery: suspend
-  - 15 min plugged in: stay locked and awake
-  - idle screen-off: disabled until display wake is reliable on this machine
+  - 15 min plugged in: stay locked, blanked, and awake
+  - true Sway output power-off: disabled until display wake is reliable on this machine
 
 ## Required Packages
 
@@ -43,7 +46,8 @@ Base packages:
 
 ```bash
 sudo apt install sway swayidle swaylock wofi kitty terminator \
-  ibus ibus-mozc jq grim slurp wl-clipboard \
+  fcitx5 fcitx5-mozc fcitx5-config-qt fcitx5-frontend-all \
+  jq grim slurp wl-clipboard \
   pipewire wireplumber network-manager bluez upower libnotify-bin \
   fonts-font-awesome
 ```
@@ -107,6 +111,7 @@ It then copies files into:
 
 ```text
 ~/.config/sway/
+~/.config/fcitx5/
 ~/.config/kitty/
 ~/.config/terminator/
 ~/.config/mozc/ibus_config.textproto
@@ -162,10 +167,10 @@ Reload Sway:
 swaymsg reload
 ```
 
-Restart IBus if Japanese input does not appear:
+Restart Fcitx5 if Japanese input does not appear:
 
 ```bash
-ibus restart
+/home/minhbui/.config/sway/start-fcitx5.sh
 ```
 
 If Wofi shows stale duplicate entries, clear its drun cache:
@@ -201,6 +206,6 @@ After pairing, the device should appear in the Bluetooth menu.
 ## Notes
 
 - Do not commit `~/.cache`, Mozc databases, lock files, or generated `__pycache__`.
-- `config/mozc/ibus_config.textproto` is intentionally the only Mozc file tracked.
-- Some wrappers force XWayland/IBus for browsers and Anki so Japanese input works more reliably under Sway.
+- Fcitx5 is used for Japanese input under Sway; the old IBus Mozc config is kept only as a legacy reference.
+- Some wrappers force XWayland for browsers and Anki so Japanese input works more reliably under Sway.
 - Kitty stays native Wayland so image rendering still works.

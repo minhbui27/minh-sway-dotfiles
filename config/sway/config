@@ -24,10 +24,9 @@ include /etc/sway/config-vars.d/*
 
 ### Input method
 #
-# Mirrors the Ubuntu/GNOME input sources: US keyboard plus IBus Mozc.
-exec_always dbus-update-activation-environment --systemd GTK_IM_MODULE=ibus QT_IM_MODULE=ibus XMODIFIERS=@im=ibus INPUT_METHOD=ibus SDL_IM_MODULE=ibus
-exec_always /home/minhbui/.config/sway/with-ibus-x11.sh ibus-daemon -drxR
-exec_always /home/minhbui/.config/sway/ibus-mozc-mode-watcher.py
+# Japanese input via Fcitx5 + Mozc.
+exec_always dbus-update-activation-environment --systemd GTK_IM_MODULE=fcitx QT_IM_MODULE=fcitx XMODIFIERS=@im=fcitx INPUT_METHOD=fcitx SDL_IM_MODULE=fcitx CLUTTER_IM_MODULE=fcitx
+exec_always /home/minhbui/.config/sway/start-fcitx5.sh
 
 ### Workspace labels
 #
@@ -57,7 +56,8 @@ output * bg /home/minhbui/.config/sway/assets/wallpaper.jpg fill
 # your screen before your computer goes to sleep.
 
 # After 10 minutes, lock on any power state.
-# After 15 minutes, suspend only on battery. Plugged in stays locked and awake.
+# After 11 minutes, blank the internal panel backlight.
+# After 15 minutes, suspend only on battery. Plugged in stays locked, blanked, and awake.
 # before-sleep locks before explicit suspend/lid-close.
 exec /home/minhbui/.config/sway/start-swayidle.sh
 
@@ -85,6 +85,10 @@ bindswitch --locked lid:off exec /home/minhbui/.config/sway/lid-open.sh
 input type:keyboard {
     xkb_model pc105
     xkb_layout us
+}
+
+input type:touchpad {
+    tap enabled
 }
 
 ### Key bindings
@@ -122,6 +126,14 @@ input type:keyboard {
     bindsym --locked XF86AudioMicMute exec /home/minhbui/.config/sway/volume.sh mic-mute
     bindsym --inhibited --no-repeat --to-code Mod4+Shift+a exec /home/minhbui/.config/sway/audio-menu.sh
     bindsym --inhibited --no-repeat --to-code $mod+Shift+a exec /home/minhbui/.config/sway/audio-menu.sh
+
+    # Brightness controls. F5/F6 are bound directly for the ThinkPad top row.
+    bindsym --locked --no-repeat F5 exec /home/minhbui/.config/sway/brightness.sh down
+    bindsym --locked --no-repeat F6 exec /home/minhbui/.config/sway/brightness.sh up
+    bindsym --locked --no-repeat XF86MonBrightnessDown exec /home/minhbui/.config/sway/brightness.sh down
+    bindsym --locked --no-repeat XF86MonBrightnessUp exec /home/minhbui/.config/sway/brightness.sh up
+    bindsym --inhibited --no-repeat --to-code Mod4+Shift+b exec /home/minhbui/.config/sway/brightness-menu.sh
+    bindsym --inhibited --no-repeat --to-code $mod+Shift+b exec /home/minhbui/.config/sway/brightness-menu.sh
 
     # Match Ubuntu's input-source switch shortcut.
     bindsym --locked Control+space exec /home/minhbui/.config/sway/toggle-input.sh

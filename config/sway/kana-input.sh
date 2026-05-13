@@ -1,61 +1,27 @@
 #!/bin/sh
 
-mode_file="${XDG_CACHE_HOME:-$HOME/.cache}/sway/ibus-mozc-mode"
-mkdir -p "$(dirname "$mode_file")"
+mode_file="${XDG_CACHE_HOME:-$HOME/.cache}/sway/fcitx5-mode"
 log_file="${XDG_CACHE_HOME:-$HOME/.cache}/sway/kana-input.log"
+mkdir -p "$(dirname "$mode_file")"
+
+if ! fcitx5-remote --check >/dev/null 2>&1; then
+    /home/minhbui/.config/sway/start-fcitx5.sh >/dev/null 2>&1
+    sleep 0.2
+fi
 
 {
-    printf "%s pid=%s engine_before=" "$(date '+%F %T')" "$$"
-    ibus engine 2>/dev/null || printf "unknown"
+    printf "%s pid=%s im_before=" "$(date '+%F %T')" "$$"
+    fcitx5-remote -n 2>/dev/null || printf "unknown"
     printf "\n"
 } >> "$log_file"
 
-for _ in 1 2 3 4 5 6 7 8 9 10; do
-    ibus engine mozc-jp >/dev/null 2>&1 || true
-    [ "$(ibus engine 2>/dev/null)" = "mozc-jp" ] && break
-    sleep 0.05
-done
-
-if [ "$(ibus engine 2>/dev/null)" != "mozc-jp" ]; then
-    printf "%s pid=%s failed_to_select_mozc\n" "$(date '+%F %T')" "$$" >> "$log_file"
-    exit 1
-fi
-
-activate_hiragana() {
-    address=$(ibus address 2>/dev/null)
-    context=$(gdbus call --address "$address" \
-        --dest org.freedesktop.IBus \
-        --object-path /org/freedesktop/IBus \
-        --method org.freedesktop.IBus.CurrentInputContext 2>/dev/null \
-        | sed -n "s/.*'\([^']*\)'.*/\1/p")
-
-    [ -n "$address" ] && [ -n "$context" ] || return 1
-
-    DBUS_SESSION_BUS_ADDRESS="$address" dbus-send --type=method_call \
-        --dest=org.freedesktop.IBus "$context" \
-        org.freedesktop.IBus.InputContext.PropertyActivate \
-        string:InputMode.Hiragana uint32:1 >/dev/null 2>&1 || return 1
-
-    DBUS_SESSION_BUS_ADDRESS="$address" dbus-send --type=method_call \
-        --dest=org.freedesktop.IBus "$context" \
-        org.freedesktop.IBus.InputContext.ProcessKeyEvent \
-        uint32:65317 uint32:0 uint32:0 >/dev/null 2>&1 || true
-    DBUS_SESSION_BUS_ADDRESS="$address" dbus-send --type=method_call \
-        --dest=org.freedesktop.IBus "$context" \
-        org.freedesktop.IBus.InputContext.ProcessKeyEvent \
-        uint32:65317 uint32:0 uint32:1073741824 >/dev/null 2>&1 || true
-}
-
-for _ in 1 2 3 4 5; do
-    activate_hiragana && break
-    sleep 0.05
-done
-
+fcitx5-remote -s mozc >/dev/null 2>&1 || true
+fcitx5-remote -o >/dev/null 2>&1 || true
 printf "あ\n" > "$mode_file"
 
 {
-    printf "%s pid=%s engine_after=" "$(date '+%F %T')" "$$"
-    ibus engine 2>/dev/null || printf "unknown"
+    printf "%s pid=%s im_after=" "$(date '+%F %T')" "$$"
+    fcitx5-remote -n 2>/dev/null || printf "unknown"
     printf " mode_cache="
     cat "$mode_file" 2>/dev/null || printf "unknown"
 } >> "$log_file"
