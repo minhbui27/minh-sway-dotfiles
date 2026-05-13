@@ -33,7 +33,7 @@ install.sh                    Non-destructive restore script
 - Lid close suspends while Sway is running, with Sway handling the lid switch directly.
 - Idle behavior:
   - 10 min on battery: suspend, with `before-sleep` locking first
-  - plugged in: stay awake
+  - 10 min plugged in: lock only and stay awake
   - idle screen-off: disabled until display wake is reliable on this machine
 
 ## Required Packages
