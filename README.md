@@ -15,7 +15,7 @@ config/mozc/                  Minimal IBus Mozc text config only
 local/bin/                    App wrapper scripts for Sway/IBus behavior
 local/share/applications/     Desktop-entry overrides for Wofi/app launchers
 systemd/logind.conf.d/        Optional system config to stop lid-close suspend
-systemd/enable-wake-sources.sh Optional root helper for keyboard/Bluetooth wake
+systemd/enable-wake-sources.sh Optional root helper for s2idle and wake sources
 systemd/system/               Optional systemd services for root helpers
 docs/sway-shortcuts.md        Shortcut reference
 install.sh                    Non-destructive restore script
@@ -129,7 +129,7 @@ To enable the safer built-in wake sources now:
 sudo sh systemd/enable-wake-sources.sh
 ```
 
-This enables the internal keyboard, TrackPoint, and Intel HID wake paths. Broad USB/Bluetooth wake is disabled by default because it caused immediate resume on this laptop.
+This sets `mem_sleep` to `s2idle` and enables the internal keyboard, TrackPoint, and Intel HID wake paths. Broad USB/Bluetooth wake is disabled by default because it caused immediate resume on this laptop under `deep`.
 
 To make those wake-source settings persist across boots:
 
@@ -137,6 +137,19 @@ To make those wake-source settings persist across boots:
 sudo install -Dm755 systemd/enable-wake-sources.sh /usr/local/bin/minh-enable-wake-sources
 sudo install -Dm644 systemd/system/minh-wake-sources.service /etc/systemd/system/minh-wake-sources.service
 sudo systemctl enable --now minh-wake-sources.service
+```
+
+To test Bluetooth keyboard wake for the current boot only:
+
+```bash
+sudo ENABLE_BLUETOOTH_WAKE=1 sh systemd/enable-wake-sources.sh
+systemctl suspend
+```
+
+If the laptop immediately wakes by itself, disable Bluetooth wake again:
+
+```bash
+sudo sh systemd/enable-wake-sources.sh
 ```
 
 ## After Install

@@ -1,5 +1,5 @@
 [Unit]
-Description=Enable wake sources for Minh's Sway laptop setup
+Description=Configure sleep mode and wake sources for Minh's Sway laptop setup
 After=multi-user.target bluetooth.service
 
 [Service]
