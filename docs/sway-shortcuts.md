@@ -1,6 +1,6 @@
 # Sway Shortcut Sheet
 
-Generated: 2026-05-12
+Generated: 2026-05-12, updated 2026-09-02
 
 Modifier notes:
 
@@ -70,6 +70,8 @@ Modifier notes:
 | `Alt+Shift+H/J/K/L` | Move focused window left/down/up/right |
 | `Alt+Shift+Arrow` | Move focused window left/down/up/right |
 | `Alt+1` ... `Alt+0` | Switch to workspace 1 ... 10 |
+| `Alt+Tab` | Next workspace |
+| `Alt+Shift+Tab` | Previous workspace |
 | `Alt+Shift+1` ... `Alt+Shift+0` | Move focused window to workspace 1 ... 10 |
 | `Alt+B` | Split horizontally |
 | `Alt+V` | Split vertically |
@@ -92,11 +94,11 @@ Modifier notes:
 | Condition | Behavior |
 | --- | --- |
 | 10 minutes idle | Lock screen |
-| 11 minutes idle | Blank the internal panel backlight |
+| 11 minutes idle | Blank and power off active displays |
 | 15 minutes idle on battery | Suspend |
 | 15 minutes idle while plugged in | Stay locked, blanked, and awake |
-| Sleep mode | `s2idle`, so the internal keyboard can wake the laptop |
-| True Sway output power-off | Disabled until display wake is reliable on this machine |
+| Sleep mode | `s2idle` by default (set by the wake-sources service) so the internal keyboard can wake the laptop; switch to `deep` if resume from s2idle hangs |
+| Idle display power-off | Enabled for active displays; wake/input restores them |
 | Lid close | Sway handles lid-close and suspends |
 | Before sleep | Lock first |
 
@@ -121,10 +123,13 @@ Modifier notes:
 | `~/.config/sway/workspace-labels.py` | Dynamic workspace labels |
 | `~/.config/sway/inhibit-lid-suspend.sh` | Prevent logind's default lid handling so Sway can handle lid close |
 | `~/.config/sway/start-swayidle.sh` | Start the staged GNOME-like idle policy |
-| `~/.config/sway/screen-blank.sh` | Save current brightness and set the internal panel backlight to zero |
-| `~/.config/sway/screen-unblank.sh` | Restore saved brightness and make sure outputs are powered on |
+| `~/.config/sway/screen-blank.sh` | Save current brightness, record active outputs, and power displays off |
+| `~/.config/sway/screen-unblank.sh` | Restore saved brightness and recorded outputs |
 | `~/.config/sway/idle-suspend.sh` | Suspend after the second idle stage only on battery, unless the system just resumed |
 | `~/.config/sway/resume-from-suspend.sh` | Mark resume time and power outputs on |
 | `~/.config/sway/lid-close.sh` | Suspend when the lid closes |
 | `~/.config/sway/lid-open.sh` | Power outputs back on when the lid opens |
+| `~/.config/sway/lock.sh` | Swaylock-effects invocation used by idle lock and before-sleep |
+| `~/.config/sway/remote-float.py` | Floats ssh-forwarded X11 windows and collects them on workspace 9 (needs `python3-i3ipc`, `xprop`) |
+| `~/.config/sway/with-ibus.sh` | Wrapper exporting fcitx IM env vars before launching an app |
 | `~/.config/sway/suspend-on-battery.sh` | Battery-only suspend helper, currently unused |

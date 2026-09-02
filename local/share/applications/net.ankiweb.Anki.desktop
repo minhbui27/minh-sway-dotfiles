@@ -1,0 +1,16 @@
+[Desktop Entry]
+Name=Anki
+Comment=An intelligent spaced-repetition memory training program
+GenericName=Flashcards
+Exec=/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=anki --file-forwarding net.ankiweb.Anki @@ %f @@
+Icon=net.ankiweb.Anki
+Categories=Education;Languages;KDE;Qt;
+Terminal=false
+Type=Application
+Version=1.0
+MimeType=application/x-apkg;application/x-anki;application/x-ankiaddon;
+X-GNOME-SingleWindow=true
+SingleMainWindow=true
+StartupWMClass=anki
+X-Flatpak-RenamedFrom=anki.desktop;
+X-Flatpak=net.ankiweb.Anki

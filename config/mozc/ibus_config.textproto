@@ -8,3 +8,11 @@ engines {
   rank : 80
 }
 active_on_launch: True
+
+# Mozc's native candidate window. Default upstream skips on sway/Hyprland,
+# which leaves Chromium-backed Qt widgets (Anki's editor is QWebEngineView)
+# with no working candidate popup. Force-enable and allow-list sway.
+mozc_renderer {
+  enabled: true
+  compatible_wayland_desktop_names: ["KDE", "GNOME", "sway", "Hyprland"]
+}

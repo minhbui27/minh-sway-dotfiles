@@ -64,6 +64,8 @@ copy_tree() {
     src_dir=$1
     dest_dir=$2
 
+    [ -d "$src_dir" ] || return 0
+
     find "$src_dir" -type f | while IFS= read -r src; do
         rel=${src#"$src_dir"/}
         case "$rel" in
@@ -89,6 +91,7 @@ copy_tree "$repo_dir/config/sway" "$HOME/.config/sway"
 copy_tree "$repo_dir/config/fcitx5" "$HOME/.config/fcitx5"
 copy_tree "$repo_dir/config/kitty" "$HOME/.config/kitty"
 copy_tree "$repo_dir/config/terminator" "$HOME/.config/terminator"
+copy_tree "$repo_dir/config/mako" "$HOME/.config/mako"
 copy_file "$repo_dir/config/mozc/ibus_config.textproto" "$HOME/.config/mozc/ibus_config.textproto" text
 
 copy_tree "$repo_dir/local/bin" "$HOME/.local/bin"
@@ -104,4 +107,7 @@ log "optional s2idle/internal keyboard wake:"
 log "  sudo install -Dm755 systemd/enable-wake-sources.sh /usr/local/bin/minh-enable-wake-sources"
 log "  sudo install -Dm644 systemd/system/minh-wake-sources.service /etc/systemd/system/minh-wake-sources.service"
 log "  sudo systemctl enable --now minh-wake-sources.service"
+log "optional deep sleep (if resume from s2idle hangs; see README Suspend section):"
+log "  sudo install -Dm644 systemd/tmpfiles.d/mem-sleep.conf /etc/tmpfiles.d/mem-sleep.conf"
+log "shell extras (uva-vpn, aliases, PATH): source shell/bashrc-extras.sh from ~/.bashrc"
 log "reload sway with: swaymsg reload"

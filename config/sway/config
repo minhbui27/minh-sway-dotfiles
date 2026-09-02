@@ -37,12 +37,14 @@ exec_always /home/minhbui/.config/sway/workspace-labels.py
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg /home/minhbui/.config/sway/assets/wallpaper.jpg fill
-#
-# Example configuration:
-#
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
-#
-# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+# Physical layout: laptop on the left, external on the right.
+output eDP-1 position 0 0
+output DP-2 position 1920 0
+
+# External is the primary screen; falls back to laptop if external isn't connected.
+workspace 1 output DP-2 eDP-1
+workspace 2 output eDP-1 DP-2
 
 ### Idle configuration
 #
@@ -56,9 +58,12 @@ output * bg /home/minhbui/.config/sway/assets/wallpaper.jpg fill
 # your screen before your computer goes to sleep.
 
 # After 10 minutes, lock on any power state.
-# After 11 minutes, blank the internal panel backlight.
+# After 11 minutes, blank and power off active displays.
 # After 15 minutes, suspend only on battery. Plugged in stays locked, blanked, and awake.
 # before-sleep locks before explicit suspend/lid-close.
+# Notification daemon (shows screenshot toasts and all other desktop notifications)
+exec mako
+
 exec /home/minhbui/.config/sway/start-swayidle.sh
 
 ### Lid handling
@@ -89,6 +94,7 @@ input type:keyboard {
 
 input type:touchpad {
     tap enabled
+    natural_scroll enabled
 }
 
 ### Key bindings
@@ -113,10 +119,8 @@ input type:touchpad {
     # Screenshots
     bindsym --locked --inhibited --no-repeat Print exec /home/minhbui/.config/sway/screenshot.sh full
     bindsym --locked --inhibited --no-repeat --release --to-code Mod4+Shift+s exec /home/minhbui/.config/sway/screenshot.sh region
-    bindcode --locked --inhibited --no-repeat --release --no-warn Mod4+Shift+39 exec /home/minhbui/.config/sway/screenshot.sh region
     bindsym --locked --inhibited --no-repeat --release --to-code $mod+Shift+s exec /home/minhbui/.config/sway/screenshot.sh region
     bindsym --locked --inhibited --no-repeat --release --to-code Mod4+Shift+c exec /home/minhbui/.config/sway/screenshot.sh clipboard
-    bindcode --locked --inhibited --no-repeat --release --no-warn Mod4+Shift+54 exec /home/minhbui/.config/sway/screenshot.sh clipboard
     bindsym --locked --inhibited --no-repeat --release --to-code $mod+Shift+c exec /home/minhbui/.config/sway/screenshot.sh clipboard
 
     # Audio controls
@@ -296,3 +300,12 @@ bar {
 }
 
 include /etc/sway/config.d/*
+
+
+# nm-applet config
+for_window [app_id="nm-applet"] floating enable, move position center
+for_window [class="(?i)x2go(client|agent)"] floating enable
+
+# ssh script
+exec python3 ~/.config/sway/remote-float.py
+

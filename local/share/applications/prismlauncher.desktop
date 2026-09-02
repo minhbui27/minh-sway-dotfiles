@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Name=Prism Launcher
+Comment=Discover, manage, and play Minecraft instances
+Type=Application
+Terminal=false
+Exec=/home/minhbui/.local/bin/PrismLauncher-Linux-x86_64.AppImage %U
+StartupNotify=true
+Icon=/home/minhbui/.local/share/icons/org.prismlauncher.PrismLauncher.png
+Categories=Game;ActionGame;AdventureGame;Simulation;PackageManager;
+Keywords=game;minecraft;mc;
+StartupWMClass=PrismLauncher
+MimeType=application/zip;application/x-modrinth-modpack+zip;x-scheme-handler/curseforge;x-scheme-handler/prismlauncher;x-scheme-handler/prismlauncher;
+X-AppImage-Version=11.0.3

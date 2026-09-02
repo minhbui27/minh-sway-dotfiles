@@ -173,7 +173,7 @@ case "${1:-}" in
         if [ "$current" -gt 0 ]; then
             printf '%s\n' "$current" > "$saved_file"
         fi
-        set_raw 0
+        set_raw 0 && log "blanked backlight from $(percent_for "$current")%"
         ;;
     restore)
         saved=""
@@ -189,6 +189,7 @@ case "${1:-}" in
 
         if set_raw "$saved"; then
             rm -f "$saved_file"
+            log "restored backlight to $(percent_for "$saved")%"
         fi
         ;;
     get)

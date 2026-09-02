@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Obsidian
+GenericName=Markdown Editor
+Comment=Knowledge base that works on local Markdown files
+Exec=/home/minhbui/Downloads/Obsidian-1.12.7.AppImage %u
+Icon=/home/minhbui/.local/share/icons/obsidian.png
+Terminal=false
+Type=Application
+Categories=Office;TextEditor;Utility;
+MimeType=x-scheme-handler/obsidian;text/markdown;
+StartupWMClass=obsidian
+Keywords=markdown;notes;knowledge;

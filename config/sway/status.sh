@@ -6,6 +6,7 @@ audio_menu="/home/minhbui/.config/sway/audio-menu.sh"
 bluetooth_menu="/home/minhbui/.config/sway/bluetooth-menu.sh"
 wifi_menu="/home/minhbui/.config/sway/wifi-menu.sh"
 click_log="${XDG_CACHE_HOME:-$HOME/.cache}/sway/status-clicks.log"
+weather_cache="${XDG_CACHE_HOME:-$HOME/.cache}/sway/weather"
 mkdir -p "$(dirname "$click_log")"
 
 json_string() {
@@ -102,6 +103,27 @@ bluetooth_status() {
     fi
 }
 
+update_weather() {
+    raw=$(curl -s --max-time 15 'https://wttr.in/?format=%c|%t' 2>/dev/null | tr -d '\n')
+    case "$raw" in
+        *'|'*) : ;;              # has the separator -> looks like a real reply
+        *) return ;;             # empty / error page / "Unknown location"
+    esac
+
+    icon=$(printf '%s' "${raw%%|*}" | tr -d ' ')
+    temp=$(printf '%s' "${raw#*|}" | tr -d ' +')   # drop the leading + on positive temps
+
+    printf '%s %s' "$icon" "$temp" > "$weather_cache"
+}
+
+weather_status() {
+    if [ -s "$weather_cache" ]; then
+        cat "$weather_cache"
+    else
+        printf '…'
+    fi
+}
+
 print_status() {
     printf ',['
     block keyboard "$(keyboard_status)"
@@ -112,7 +134,9 @@ print_status() {
     printf ','
     block wifi "$(wifi_status)"
     printf ','
-    block clock "$(date +' %Y-%m-%d %H:%M')"
+    block clock "$(TZ=America/New_York date +' %Y-%m-%d %H:%M')"
+    printf ','
+    block weather "$(weather_status)"
     printf ','
     block bluetooth "$(bluetooth_status)"
     printf ','
@@ -138,10 +162,16 @@ printf '[\n'
 printf '[]\n'
 
 while :; do
+    update_weather
+    sleep 900
+done &
+weather_pid=$!
+
+while :; do
     print_status
     sleep 2
 done &
 status_pid=$!
 
-trap 'kill "$status_pid" 2>/dev/null' EXIT
+trap 'kill "$status_pid" "$weather_pid" 2>/dev/null' EXIT
 handle_clicks
